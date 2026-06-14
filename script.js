@@ -196,72 +196,7 @@ function lerp(start, end, factor) {
   revealElements.forEach(el => observer.observe(el));
 })();
 
-/* ─── STATS COUNTER ANIMATION ────────────────────────────────────── */
-(function initStatsCounter() {
-  const statNumbers = $$('.stat-number[data-target]');
-  if (!statNumbers.length) return;
 
-  const DURATION = 2200; // ms
-  const EASING_FUNC = (t) => 1 - Math.pow(1 - t, 3); // ease-out cubic
-
-  function animateCounter(el) {
-    const target = parseFloat(el.dataset.target);
-    const suffix = el.dataset.suffix || '';
-    const divisor = parseFloat(el.dataset.divisor) || 1;
-    const isFloat = el.dataset.float === 'true';
-    const start = performance.now();
-
-    function update(now) {
-      const elapsed = now - start;
-      const progress = clamp(elapsed / DURATION, 0, 1);
-      const eased = EASING_FUNC(progress);
-      const current = target * eased;
-      const display = current / divisor;
-
-      if (isFloat) {
-        el.textContent = display.toFixed(1) + suffix;
-      } else if (divisor >= 1000000) {
-        el.textContent = (display).toFixed(1) + suffix;
-      } else if (divisor >= 1000) {
-        el.textContent = Math.floor(display) + suffix;
-      } else {
-        el.textContent = Math.floor(current) + suffix;
-      }
-
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      } else {
-        // Ensure final value is exact
-        if (isFloat) {
-          el.textContent = (target / divisor).toFixed(1) + suffix;
-        } else if (divisor >= 1000000) {
-          el.textContent = (target / divisor).toFixed(0) + suffix;
-        } else if (divisor >= 1000) {
-          el.textContent = (target / divisor) + suffix;
-        } else {
-          el.textContent = target + suffix;
-        }
-      }
-    }
-
-    requestAnimationFrame(update);
-  }
-
-  // Trigger counters when stats section is in view
-  const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        statNumbers.forEach(el => animateCounter(el));
-        statsObserver.disconnect();
-      }
-    });
-  }, {
-    threshold: 0.3
-  });
-
-  const statsSection = $('#about');
-  if (statsSection) statsObserver.observe(statsSection);
-})();
 
 /* ─── HERO PRODUCT CARDS — Staggered entrance ────────────────────── */
 (function initHeroCards() {
@@ -493,50 +428,7 @@ function lerp(start, end, factor) {
   });
 })();
 
-/* ─── PRODUCT CARD MAGNETIC HOVER ────────────────────────────────── */
-(function initMagneticCards() {
-  const cards = $$('.product-card');
-  if (!cards.length) return;
 
-  // Only for non-touch devices
-  if (window.matchMedia('(pointer: coarse)').matches) return;
-
-  cards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const cx = rect.width / 2;
-      const cy = rect.height / 2;
-
-      const rotateX = clamp((y - cy) / cy * -5, -5, 5);
-      const rotateY = clamp((x - cx) / cx * 5, -5, 5);
-
-      card.style.transform = `translateY(-6px) scale(1.01) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-      card.style.transformStyle = 'preserve-3d';
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-      card.style.transformStyle = '';
-    });
-  });
-})();
-
-/* ─── ECOSYSTEM NODES — Interactive hover glow ───────────────────── */
-(function initEcoNodes() {
-  const nodes = $$('.eco-node');
-  nodes.forEach(node => {
-    node.addEventListener('mouseenter', () => {
-      const color = getComputedStyle(node).getPropertyValue('--node-color').trim();
-      node.style.boxShadow = `0 16px 40px rgba(0,0,0,0.35), 0 0 30px ${color}33`;
-    });
-
-    node.addEventListener('mouseleave', () => {
-      node.style.boxShadow = '';
-    });
-  });
-})();
 
 /* ─── PARALLAX HERO BLOBS ────────────────────────────────────────── */
 (function initParallaxBlobs() {
@@ -674,13 +566,7 @@ function lerp(start, end, factor) {
   setTimeout(type, 3500);
 })();
 
-/* ─── ECOSYSTEM ANIMATED LINES — SVG dash animation ─────────────── */
-(function initEcoDashAnimation() {
-  const ecoLines = $$('.eco-line');
-  ecoLines.forEach((line, index) => {
-    line.style.animationDelay = `${index * 0.4}s`;
-  });
-})();
+
 
 /* ─── PARTICLE AMBIENT EFFECT ────────────────────────────────────── */
 (function initAmbientParticles() {
@@ -828,34 +714,7 @@ function lerp(start, end, factor) {
   }, { passive: true });
 })();
 
-/* ─── PRODUCT CARDS — Dynamic border gradient on hover ──────────── */
-(function initCardBorderEffect() {
-  const cards = $$('.product-card, .stat-card');
 
-  cards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1);
-      const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1);
-
-      card.style.setProperty('--mouse-x', `${x}%`);
-      card.style.setProperty('--mouse-y', `${y}%`);
-    });
-  });
-
-  // Add the CSS for the effect dynamically
-  const style = document.createElement('style');
-  style.textContent = `
-    .product-card, .stat-card {
-      background-image: radial-gradient(
-        400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-        rgba(99, 102, 241, 0.04) 0%,
-        transparent 60%
-      );
-    }
-  `;
-  document.head.appendChild(style);
-})();
 
 /* ─── PAGE VISIBILITY — Pause animations when tab is hidden ─────── */
 document.addEventListener('visibilitychange', () => {
