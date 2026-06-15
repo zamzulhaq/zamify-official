@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Blog Zamify — Artikel, tips, dan wawasan seputar ekosistem digital Zamify." />
+  <meta name="theme-color" content="#ffffff" />
+  <title>Blog — Zamify</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .blog-hero {
+      min-height: 40vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding-top: 80px;
+    }
+    .blog-hero-headline {
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+      font-family: var(--font-alt);
+      margin-bottom: 12px;
+    }
+    .blog-hero-sub {
+      color: var(--muted);
+      font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .blog-grid-section {
+      padding: 0 0 80px;
+      background: var(--surface);
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .blog-card {
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      background: var(--paper);
+      border: 1.5px solid var(--line-soft);
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--dur-mid) var(--ease), box-shadow var(--dur-mid) var(--ease), border-color var(--dur-mid) ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--line);
+    }
+
+    .blog-card-thumb {
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .blog-card-thumb svg {
+      width: 60px;
+      height: 60px;
+      opacity: 0.3;
+    }
+    .blog-card-body {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+    .blog-card-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.78rem;
+      color: var(--muted-light);
+    }
+    .blog-card-category {
+      display: inline-flex;
+      align-items: center;
+      height: 22px;
+      padding: 0 10px;
+      border-radius: 6px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .blog-card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      font-family: var(--font-alt);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .blog-card-excerpt {
+      font-size: 0.87rem;
+      color: var(--muted);
+      line-height: 1.65;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+    .blog-card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-top: 12px;
+      transition: color var(--dur-fast) ease, gap var(--dur-fast) ease;
+    }
+    .blog-card:hover .blog-card-link {
+      color: var(--ink);
+      gap: 10px;
+    }
+    .blog-card-link svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .blog-empty {
+      text-align: center;
+      padding: 80px 20px;
+      color: var(--muted);
+    }
+    .blog-empty h3 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 8px;
+      font-family: var(--font-alt);
+    }
+
+    .blog-article-full {
+      display: none;
+    }
+
+    @media (max-width: 768px) {
+      .blog-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════
+       STICKY NAVBAR
+  ═══════════════════════════════════════════ -->
+  <nav id="navbar" class="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-container">
+
+      <a href="index.html" class="nav-logo" aria-label="Zamify Home">
+        <img src="asset/by (2).png" alt="Zamify" class="nav-logo-mark" />
+        <span class="nav-logo-text">Zamify</span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="index.html#experiments" class="nav-link">Jelajahi</a></li>
+        <li><a href="index.html#about" class="nav-link">Tentang</a></li>
+        <li><a href="index.html#connect" class="nav-link">Tetap Terhubung</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="index.html" class="nav-signin" id="nav-signin-btn">← Beranda</a>
+        <a href="index.html#connect" class="btn btn-primary nav-cta">Mulai</a>
+      </div>
+
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <ul class="mobile-nav-links" role="list">
+        <li><a href="index.html#experiments" class="mobile-nav-link">Jelajahi</a></li>
+        <li><a href="index.html#about" class="mobile-nav-link">Tentang</a></li>
+        <li><a href="index.html#connect" class="mobile-nav-link">Tetap Terhubung</a></li>
+      </ul>
+      <div class="mobile-nav-actions">
+        <a href="index.html" class="btn btn-ghost">← Beranda</a>
+        <a href="index.html#connect" class="btn btn-primary">Mulai</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
+       BLOG HERO
+  ═══════════════════════════════════════════ -->
+  <section class="blog-hero section-pad" aria-labelledby="blog-hero-title">
+    <div class="section-container" style="text-align:center;">
+      <h1 id="blog-hero-title" class="blog-hero-headline reveal-up">Blog Zamify</h1>
+      <p class="blog-hero-sub reveal-up" style="--delay:0.1s">
+        Artikel, tips, dan wawasan untuk mengembangkan ekosistem digital Anda.
+      </p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       BLOG GRID
+  ═══════════════════════════════════════════ -->
+  <section class="blog-grid-section section-pad" id="blog-posts">
+    <div class="section-container">
+      <div class="blog-grid" role="list">
+
+        <article class="blog-card reveal-card" style="--delay:0.05s" role="listitem">
+          <div class="blog-card-thumb" style="background:linear-gradient(145deg,#eef2ff,#c7d2fe);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/>
+            </svg>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-card-category" style="color:#6366f1;background:rgba(99,102,241,0.1);">E-commerce</span>
+              <span>5 min baca</span>
+            </div>
+            <h2 class="blog-card-title">Panduan Lengkap Memulai Toko Online dengan Sellory</h2>
+            <p class="blog-card-excerpt">Pelajari langkah demi langkah cara memulai toko online menggunakan Sellory — dari pendaftaran hingga produk pertama Anda tayang.</p>
+            <a href="#" class="blog-card-link">
+              Baca selengkapnya
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="blog-card reveal-card" style="--delay:0.1s" role="listitem">
+          <div class="blog-card-thumb" style="background:linear-gradient(145deg,#f0fdf4,#bbf7d0);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/>
+            </svg>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-card-category" style="color:#10b981;background:rgba(16,185,129,0.1);">Produktivitas</span>
+              <span>4 min baca</span>
+            </div>
+            <h2 class="blog-card-title">Tips Meningkatkan Produktivitas Tim dengan Ebsensy</h2>
+            <p class="blog-card-excerpt">Tingkatkan efisiensi tim Anda dengan fitur-fitur unggulan Ebsensy. Dari manajemen absensi hingga pelaporan otomatis.</p>
+            <a href="#" class="blog-card-link">
+              Baca selengkapnya
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="blog-card reveal-card" style="--delay:0.15s" role="listitem">
+          <div class="blog-card-thumb" style="background:linear-gradient(145deg,#fdf4ff,#e9d5ff);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18.37 2.63L14 7l-1.59-1.59a2 2 0 00-2.82 0L8 7l9 9 1.59-1.59a2 2 0 000-2.82L17 10l4.37-4.37a2 2 0 000-2.82 2 2 0 00-3 0z"/><path d="M9 8c-4 4-6 12-6 12s8-2 12-6"/>
+            </svg>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-card-category" style="color:#8b5cf6;background:rgba(139,92,246,0.1);">Kreatif</span>
+              <span>6 min baca</span>
+            </div>
+            <h2 class="blog-card-title">Kreativitas Tanpa Batas: Menggunakan Creatory untuk Desain AI</h2>
+            <p class="blog-card-excerpt">Jelajahi kemampuan Creatory dalam menghasilkan desain menakjubkan dengan bantuan AI. Cocok untuk pemula maupun profesional.</p>
+            <a href="#" class="blog-card-link">
+              Baca selengkapnya
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="blog-card reveal-card" style="--delay:0.2s" role="listitem">
+          <div class="blog-card-thumb" style="background:linear-gradient(145deg,#f0f9ff,#bae6fd);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-card-category" style="color:#0ea5e9;background:rgba(14,165,233,0.1);">Wawasan</span>
+              <span>7 min baca</span>
+            </div>
+            <h2 class="blog-card-title">Mengenal Ekosistem Zamify: Satu Platform untuk Semua Kebutuhan Digital</h2>
+            <p class="blog-card-excerpt">Zamify menghadirkan tiga produk unggulan yang saling terintegrasi. Pelajari bagaimana ekosistem ini dapat membantu bisnis Anda.</p>
+            <a href="#" class="blog-card-link">
+              Baca selengkapnya
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="blog-card reveal-card" style="--delay:0.25s" role="listitem">
+          <div class="blog-card-thumb" style="background:linear-gradient(145deg,#fffbeb,#fde68a);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-card-category" style="color:#d97706;background:rgba(245,158,11,0.1);">Tips</span>
+              <span>5 min baca</span>
+            </div>
+            <h2 class="blog-card-title">Transformasi Digital untuk UMKM: Langkah Awal yang Tepat</h2>
+            <p class="blog-card-excerpt">Panduan praktis bagi UMKM yang ingin memulai transformasi digital. Temukan tools dan strategi yang tepat untuk bisnis Anda.</p>
+            <a href="#" class="blog-card-link">
+              Baca selengkapnya
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="blog-card reveal-card" style="--delay:0.3s" role="listitem">
+          <div class="blog-card-thumb" style="background:linear-gradient(145deg,#fce4ec,#f8bbd0);">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#e91e63" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+            </svg>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-card-meta">
+              <span class="blog-card-category" style="color:#e91e63;background:rgba(233,30,99,0.1);">Keamanan</span>
+              <span>6 min baca</span>
+            </div>
+            <h2 class="blog-card-title">Keamanan Data di Era Digital: Komitmen Zamify</h2>
+            <p class="blog-card-excerpt">Bagaimana Zamify melindungi data Anda? Pelajari langkah-langkah keamanan yang kami terapkan untuk menjaga privasi dan keamanan pengguna.</p>
+            <a href="#" class="blog-card-link">
+              Baca selengkapnya
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo" aria-label="Zamify Home">
+            <img src="asset/by (2).png" alt="Zamify" width="28" height="28" />
+            <span>Zamify</span>
+          </a>
+          <p class="footer-tagline">Platform digital terpadu untuk commerce, produktivitas, dan kreativitas.</p>
+          <div class="footer-socials">
+            <a href="#" class="social-link" aria-label="Twitter">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="#" class="social-link" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="#" class="social-link" aria-label="GitHub">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-links-group">
+          <h4 class="footer-group-title">Produk</h4>
+          <ul>
+            <li><a href="#">Sellory</a></li>
+            <li><a href="#">Ebsensy</a></li>
+            <li><a href="#">Creatory</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-group">
+          <h4 class="footer-group-title">Perusahaan</h4>
+          <ul>
+            <li><a href="index.html#about">Tentang</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="#">Karir</a></li>
+            <li><a href="#">Pers</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-group">
+          <h4 class="footer-group-title">Sumber Daya</h4>
+          <ul>
+            <li><a href="#">Dokumentasi</a></li>
+            <li><a href="#">Referensi API</a></li>
+            <li><a href="#">Komunitas</a></li>
+            <li><a href="#">Dukungan</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-group">
+          <h4 class="footer-group-title">Hukum</h4>
+          <ul>
+            <li><a href="#">Kebijakan Privasi</a></li>
+            <li><a href="#">Ketentuan Layanan</a></li>
+            <li><a href="#">Kebijakan Cookie</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2026 Zamify. Hak cipta dilindungi.</p>
+        <p class="footer-motto">Bangun. Ciptakan. Kembangkan.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
+
+  <div class="toast" id="toast" aria-live="polite">
+    <span class="toast-icon"></span>
+    <span class="toast-msg">Masih dalam masa pembangunan</span>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    (function initBlogLinks() {
+      document.querySelectorAll('.blog-card-link').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          if (typeof showToast === 'function') {
+            showToast(' Artikel sedang dalam pengembangan');
+          }
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

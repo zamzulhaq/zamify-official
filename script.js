@@ -769,7 +769,7 @@ console.log(
   // Platform buttons → toast under construction
   $$('.modal-platform-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      showToast('🚧 ' + btn.dataset.platform + ' masih dalam masa pembangunan');
+      showToast(' ' + btn.dataset.platform + ' masih dalam masa pembangunan');
       closeModal();
     });
   });
@@ -782,8 +782,8 @@ function showToast(msg) {
   if (!toast) return;
   const icon = toast.querySelector('.toast-icon');
   const text = toast.querySelector('.toast-msg');
-  if (icon) icon.textContent = msg.includes('🚧') ? '🚧' : 'ℹ️';
-  if (text) text.textContent = msg.replace('🚧 ', '');
+  if (icon) icon.textContent = msg.includes('') ? '' : 'ℹ️';
+  if (text) text.textContent = msg.replace(' ', '');
   toast.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
@@ -795,7 +795,7 @@ function showToast(msg) {
   $$('.exp-card-link').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
-      showToast('🚧 Masih dalam masa pembangunan');
+      showToast(' Masih dalam masa pembangunan');
     });
   });
 
@@ -803,7 +803,7 @@ function showToast(msg) {
   $$('.btn-pill-yellow').filter(b => b.textContent.trim() === 'Ikuti Pembaruan').forEach(btn => {
     btn.addEventListener('click', e => {
       e.preventDefault();
-      showToast('🚧 Masih dalam masa pembangunan');
+      showToast(' Masih dalam masa pembangunan');
     });
   });
 
@@ -812,7 +812,7 @@ function showToast(msg) {
   if (viewAll) {
     viewAll.addEventListener('click', e => {
       e.preventDefault();
-      showToast('🚧 Masih dalam masa pembangunan');
+      showToast(' Masih dalam masa pembangunan');
     });
   }
 
@@ -820,7 +820,7 @@ function showToast(msg) {
   $$('.footer-links-group a[href="#"]').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
-      showToast('🚧 Masih dalam masa pembangunan');
+      showToast(' Masih dalam masa pembangunan');
     });
   });
 
@@ -828,7 +828,7 @@ function showToast(msg) {
   $$('.footer-socials .social-link').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
-      showToast('🚧 Masih dalam masa pembangunan');
+      showToast(' Masih dalam masa pembangunan');
     });
   });
 })();
