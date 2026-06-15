@@ -740,9 +740,6 @@ console.log(
 (function initPlatformModal() {
   const modal = $('#platform-modal');
   const closeBtn = $('#modal-close');
-  const signinBtns = [...$$('#nav-signin-btn'), ...$$('.btn-ghost')].filter(
-    b => b.textContent.trim() === 'Masuk'
-  );
   if (!modal || !closeBtn) return;
 
   function openModal(e) {
@@ -754,7 +751,17 @@ console.log(
     modal.classList.remove('open');
     modal.setAttribute('aria-hidden', 'true');
   }
-  signinBtns.forEach(btn => btn.addEventListener('click', openModal));
+
+  // All triggers that open the platform picker
+  const modalTriggers = [
+    ...$$('#nav-signin-btn'),
+    ...$$('.btn-ghost').filter(b => b.textContent.trim() === 'Masuk'),
+    ...$$('#nav-getstarted-btn'),
+    ...$$('.mobile-nav-actions .btn-primary'),
+    ...$$('.btn-pill-yellow').filter(b => b.textContent.trim() === 'Mulai Gratis'),
+  ];
+  modalTriggers.forEach(btn => btn.addEventListener('click', openModal));
+
   closeBtn.addEventListener('click', closeModal);
   modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
@@ -782,9 +789,43 @@ function showToast(msg) {
   toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
-/* ─── COBA SEKARANG → under construction toast ───────────────────── */
-(function initCobaSekarang() {
+/* ─── SEMUA TOMBOL href="#" → TOAST ────────────────────────────── */
+(function initRemainingButtons() {
+  // Coba Sekarang (product cards)
   $$('.exp-card-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      showToast('🚧 Masih dalam masa pembangunan');
+    });
+  });
+
+  // Ikuti Pembaruan (connect section)
+  $$('.btn-pill-yellow').filter(b => b.textContent.trim() === 'Ikuti Pembaruan').forEach(btn => {
+    btn.addEventListener('click', e => {
+      e.preventDefault();
+      showToast('🚧 Masih dalam masa pembangunan');
+    });
+  });
+
+  // Lihat semua koleksi (experiments header)
+  const viewAll = $('.labs-view-all');
+  if (viewAll) {
+    viewAll.addEventListener('click', e => {
+      e.preventDefault();
+      showToast('🚧 Masih dalam masa pembangunan');
+    });
+  }
+
+  // Semua link di footer (produk, perusahaan, sumber daya, hukum)
+  $$('.footer-links-group a[href="#"]').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      showToast('🚧 Masih dalam masa pembangunan');
+    });
+  });
+
+  // Social icons footer
+  $$('.footer-socials .social-link').forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
       showToast('🚧 Masih dalam masa pembangunan');
