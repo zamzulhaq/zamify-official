@@ -220,191 +220,7 @@ function lerp(start, end, factor) {
 })();
 
 /* ─── SMOOTH SCROLL ──────────────────────────────────────────────── */
-/* ─── HERO FULLSCREEN CAROUSEL (Google Flow Style) ───────────────── */
-(function initHeroFullscreenCarousel() {
-  const heroSection = $('#hero');
-  const slides = $$('.hero-fs-slide');
-  const sideDots = $$('.hero-fs-dot');
-  const bottomDots = $$('.hero-fs-bdot');
-  const arrows = $$('.hero-fs-arrow');
-  if (!heroSection || !slides.length) return;
-
-  let activeIndex = 0;
-  let autoTimer = null;
-  const autoDelay = 5500; // 5.5s to match CSS dotFillUp animation duration
-  
-  function setActiveSlide(nextIndex) {
-    // Wrap around index
-    activeIndex = (nextIndex + slides.length) % slides.length;
-
-    // Update slides
-    slides.forEach((slide, index) => {
-      const isActive = index === activeIndex;
-      slide.classList.toggle('active', isActive);
-      slide.setAttribute('aria-hidden', String(!isActive));
-    });
-
-    // Update side dots
-    sideDots.forEach((dot, index) => {
-      const isActive = index === activeIndex;
-      dot.classList.toggle('active', isActive);
-      dot.setAttribute('aria-selected', String(isActive));
-      
-      // Reset progress animation by cloning/reflowing progress bar if needed
-      const progress = $('.hero-fs-dot-progress', dot);
-      if (progress) {
-        progress.style.animation = 'none';
-        // Trigger reflow
-        progress.offsetHeight;
-        progress.style.animation = '';
-      }
-    });
-
-    // Update bottom dots
-    bottomDots.forEach((bdot, index) => {
-      const isActive = index === activeIndex;
-      bdot.classList.toggle('active', isActive);
-      bdot.setAttribute('aria-selected', String(isActive));
-    });
-
-    restartAutoSlide();
-  }
-
-  function move(direction) {
-    setActiveSlide(activeIndex + direction);
-  }
-
-  function restartAutoSlide() {
-    if (autoTimer) clearInterval(autoTimer);
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    autoTimer = setInterval(() => {
-      move(1);
-    }, autoDelay);
-  }
-
-  // Event Listeners: Arrows
-  arrows.forEach(arrow => {
-    arrow.addEventListener('click', () => {
-      const dir = parseInt(arrow.dataset.fsDir, 10) || 1;
-      move(dir);
-    });
-  });
-
-  // Event Listeners: Side Dots
-  sideDots.forEach(dot => {
-    dot.addEventListener('click', () => {
-      const index = parseInt(dot.dataset.fsDot, 10);
-      setActiveSlide(index);
-    });
-  });
-
-  // Event Listeners: Bottom Dots
-  bottomDots.forEach(bdot => {
-    bdot.addEventListener('click', () => {
-      const index = parseInt(bdot.dataset.fsBdot, 10);
-      setActiveSlide(index);
-    });
-  });
-
-  // Keyboard Navigation
-  window.addEventListener('keydown', (e) => {
-    // Only handle if hero is in viewport
-    const rect = heroSection.getBoundingClientRect();
-    const inView = rect.top >= -100 && rect.bottom <= window.innerHeight + 100;
-    if (!inView) return;
-
-    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-      e.preventDefault();
-      move(1);
-    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-      e.preventDefault();
-      move(-1);
-    }
-  });
-
-  // Wheel / Scroll Navigation
-  let lastScrollTime = 0;
-  const scrollThrottle = 800; // ms
-
-  window.addEventListener('wheel', (e) => {
-    const rect = heroSection.getBoundingClientRect();
-    // Only intercept if hero section is fully in viewport (or close to it)
-    const isHeroVisible = rect.top === 0;
-    if (!isHeroVisible) return;
-
-    // If scrolling down at the last slide, let normal scroll happen
-    if (activeIndex === slides.length - 1 && e.deltaY > 0) {
-      return;
-    }
-    // If scrolling up at the first slide, let normal scroll happen
-    if (activeIndex === 0 && e.deltaY < 0) {
-      return;
-    }
-
-    // Otherwise intercept wheel and change slide
-    e.preventDefault();
-
-    const now = performance.now();
-    if (now - lastScrollTime < scrollThrottle) return;
-    lastScrollTime = now;
-
-    if (e.deltaY > 0) {
-      move(1);
-    } else if (e.deltaY < 0) {
-      move(-1);
-    }
-  }, { passive: false });
-
-  // Swipe Navigation
-  let touchStartY = 0;
-  let touchStartX = 0;
-
-  heroSection.addEventListener('touchstart', (e) => {
-    touchStartY = e.touches[0].clientY;
-    touchStartX = e.touches[0].clientX;
-  }, { passive: true });
-
-  heroSection.addEventListener('touchend', (e) => {
-    const rect = heroSection.getBoundingClientRect();
-    if (rect.top !== 0) return; // Only swipe when hero is centered
-
-    const touchEndY = e.changedTouches[0].clientY;
-    const touchEndX = e.changedTouches[0].clientX;
-
-    const diffY = touchStartY - touchEndY;
-    const diffX = touchStartX - touchEndX;
-
-    // Check if vertical or horizontal swipe is dominant
-    if (Math.abs(diffY) > 50 || Math.abs(diffX) > 50) {
-      if (Math.abs(diffY) > Math.abs(diffX)) {
-        // Vertical swipe
-        if (diffY > 0) {
-          // Swipe up -> Next slide (unless on last slide)
-          if (activeIndex < slides.length - 1) {
-            e.preventDefault();
-            move(1);
-          }
-        } else {
-          // Swipe down -> Prev slide (unless on first slide)
-          if (activeIndex > 0) {
-            e.preventDefault();
-            move(-1);
-          }
-        }
-      } else {
-        // Horizontal swipe
-        if (diffX > 0) {
-          move(1);
-        } else {
-          move(-1);
-        }
-      }
-    }
-  }, { passive: false });
-
-  // Initialize
-  setActiveSlide(0);
-})();
+/* ─── HERO — Static (no carousel) ─────────────────────────── */
 
 (function initSmoothScroll() {
   $$('a[href^="#"]').forEach(anchor => {
@@ -572,7 +388,7 @@ function lerp(start, end, factor) {
 (function initAmbientParticles() {
   const hero = $('.hero-fullscreen');
   if (!hero) return;
-  if ($('.hero-showcase')) return;
+  // Skip on any hero that isn't the fullscreen one
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const canvas = document.createElement('canvas');
@@ -581,7 +397,7 @@ function lerp(start, end, factor) {
     inset: 0;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.4;
+    opacity: 0.7;
   `;
   hero.insertBefore(canvas, hero.firstChild);
 
@@ -605,15 +421,16 @@ function lerp(start, end, factor) {
       this.x = Math.random() * canvas.width;
       this.y = Math.random() * canvas.height;
       this.size = Math.random() * 1.5 + 0.5;
-      this.speedX = (Math.random() - 0.5) * 0.35;
-      this.speedY = (Math.random() - 0.5) * 0.35;
-      this.opacity = Math.random() * 0.4 + 0.1;
+      this.speedX = (Math.random() - 0.5) * 0.3;
+      this.speedY = (Math.random() - 0.5) * 0.3;
+      this.opacity = Math.random() * 0.18 + 0.04;
       this.maxOpacity = this.opacity;
       this.life = Math.random() * 300 + 200;
       this.age = 0;
 
       // Random brand color
-      const colors = ['99, 102, 241', '139, 92, 246', '168, 85, 247', '192, 132, 252'];
+      // Light bg – use soft, low-opacity brand colors
+      const colors = ['66, 133, 244', '139, 92, 246', '52, 168, 83', '251, 188, 4'];
       this.color = colors[Math.floor(Math.random() * colors.length)];
     }
 
@@ -696,7 +513,7 @@ function lerp(start, end, factor) {
     top: '0',
     left: '0',
     height: '2px',
-    background: 'linear-gradient(90deg, #ffcc34, #43e47f, #5b95f4)',
+    background: 'linear-gradient(90deg, #4285f4, #8b5cf6, #34a853)',
     zIndex: '9999',
     transformOrigin: 'left center',
     transform: 'scaleX(0)',
@@ -821,9 +638,9 @@ document.addEventListener('visibilitychange', () => {
     cards.forEach((card, i) => {
       const idxDist = (i - closestIdx) / halfSpan;
       const absDist = Math.min(1, Math.abs(idxDist));
-      const translateYAmt = -absDist * 100;
-      const scaleAmt = 1 - absDist * 0.08;
-      card.style.transform = `translateY(${translateYAmt}px) scale(${scaleAmt})`;
+      // Subtle scale only — no vertical translate for clean Labs look
+      const scaleAmt = 1 - absDist * 0.03;
+      card.style.transform = `scale(${scaleAmt})`;
       card.style.zIndex = Math.round((1 - absDist) * 10);
     });
   }
