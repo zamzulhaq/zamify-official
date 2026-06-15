@@ -154,9 +154,72 @@
       display: none;
     }
 
+    @media (max-width: 1024px) {
+      .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .blog-hero {
+        min-height: 30vh;
+        padding-top: 72px;
+      }
+    }
+
     @media (max-width: 768px) {
       .blog-grid {
         grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .blog-grid-section {
+        padding: 0 0 48px;
+      }
+      .blog-hero {
+        min-height: 25vh;
+        padding: 60px 0 20px;
+      }
+      .blog-hero-headline {
+        font-size: clamp(1.6rem, 6vw, 2rem);
+      }
+      .blog-hero-sub {
+        font-size: 0.9rem;
+      }
+      .blog-card-thumb {
+        height: 160px;
+      }
+      .blog-card-body {
+        padding: 18px;
+      }
+      .blog-card-title {
+        font-size: 1rem;
+      }
+      .blog-card-excerpt {
+        font-size: 0.82rem;
+        -webkit-line-clamp: 2;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .blog-hero {
+        min-height: 20vh;
+        padding: 48px 0 16px;
+      }
+      .blog-hero-headline {
+        font-size: 1.4rem;
+      }
+      .blog-card-thumb {
+        height: 140px;
+      }
+      .blog-card-body {
+        padding: 14px;
+      }
+      .blog-card-title {
+        font-size: 0.95rem;
+      }
+      .blog-card-meta {
+        font-size: 0.72rem;
+        gap: 8px;
+      }
+      .blog-card-link {
+        font-size: 0.8rem;
       }
     }
   </style>
