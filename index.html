@@ -557,6 +557,40 @@
   <!-- Cursor glow effect -->
   <div class="cursor-glow" id="cursor-glow" aria-hidden="true"></div>
 
+  <!-- Platform Picker Modal -->
+  <div class="modal-overlay" id="platform-modal" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" id="modal-close" aria-label="Tutup">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+      <h3 class="modal-title">Pilih Platform</h3>
+      <p class="modal-sub">Masuk ke salah satu platform Zamify</p>
+      <div class="modal-platforms">
+        <button class="modal-platform-btn" data-platform="sellory">
+          <span class="modal-platform-icon" style="background:#eef2ff;color:#6366f1">S</span>
+          <span class="modal-platform-name">Sellory</span>
+          <span class="modal-platform-desc">Kelola toko online Anda</span>
+        </button>
+        <button class="modal-platform-btn" data-platform="ebsensy">
+          <span class="modal-platform-icon" style="background:#f0fdf4;color:#10b981">E</span>
+          <span class="modal-platform-name">Ebsensy</span>
+          <span class="modal-platform-desc">Absensi & manajemen tim</span>
+        </button>
+        <button class="modal-platform-btn" data-platform="creatory">
+          <span class="modal-platform-icon" style="background:#fdf4ff;color:#d946ef">C</span>
+          <span class="modal-platform-name">Creatory</span>
+          <span class="modal-platform-desc">Studio kreatif berbasis AI</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" aria-live="polite">
+    <span class="toast-icon">🚧</span>
+    <span class="toast-msg">Masih dalam masa pembangunan</span>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

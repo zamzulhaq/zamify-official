@@ -735,3 +735,59 @@ console.log(
   'color: #6366f1; font-size: 18px; font-weight: 800; font-family: system-ui;',
   'color: #a5b4fc; font-size: 12px; font-family: system-ui;'
 );
+
+/* ─── PLATFORM MODAL ─────────────────────────────────────────────── */
+(function initPlatformModal() {
+  const modal = $('#platform-modal');
+  const closeBtn = $('#modal-close');
+  const signinBtns = [...$$('#nav-signin-btn'), ...$$('.btn-ghost')].filter(
+    b => b.textContent.trim() === 'Masuk'
+  );
+  if (!modal || !closeBtn) return;
+
+  function openModal(e) {
+    e.preventDefault();
+    modal.classList.add('open');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+  function closeModal() {
+    modal.classList.remove('open');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+  signinBtns.forEach(btn => btn.addEventListener('click', openModal));
+  closeBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+  // Platform buttons → toast under construction
+  $$('.modal-platform-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      showToast('🚧 ' + btn.dataset.platform + ' masih dalam masa pembangunan');
+      closeModal();
+    });
+  });
+})();
+
+/* ─── TOAST ───────────────────────────────────────────────────────── */
+let toastTimer = null;
+function showToast(msg) {
+  const toast = $('#toast');
+  if (!toast) return;
+  const icon = toast.querySelector('.toast-icon');
+  const text = toast.querySelector('.toast-msg');
+  if (icon) icon.textContent = msg.includes('🚧') ? '🚧' : 'ℹ️';
+  if (text) text.textContent = msg.replace('🚧 ', '');
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+/* ─── COBA SEKARANG → under construction toast ───────────────────── */
+(function initCobaSekarang() {
+  $$('.exp-card-link').forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      showToast('🚧 Masih dalam masa pembangunan');
+    });
+  });
+})();
