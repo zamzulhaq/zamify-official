@@ -18,10 +18,7 @@
   ═══════════════════════════════════════════ -->
   <div id="intro-screen" class="intro-screen" aria-hidden="true">
     <div class="intro-content">
-      <div class="intro-logo">
-        <img src="asset/by (2).png" alt="Zamify" class="intro-logo-mark" />
-        <span class="intro-logo-text">Zamify</span>
-      </div>
+      <span class="intro-logo-text">Zamify</span>
       <p class="intro-tagline">Bangun Ekosistem Digital Anda</p>
       <div class="intro-progress">
         <div class="intro-progress-bar"></div>
@@ -66,7 +63,7 @@
       </a>
 
       <ul class="nav-links" role="list">
-        <li><a href="#explore" class="nav-link">Jelajahi</a></li>
+        <li><a href="#experiments" class="nav-link">Jelajahi</a></li>
         <li><a href="#about" class="nav-link">Tentang</a></li>
         <li><a href="#connect" class="nav-link">Tetap Terhubung</a></li>
       </ul>
@@ -84,7 +81,7 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
       <ul class="mobile-nav-links" role="list">
-        <li><a href="#explore" class="mobile-nav-link">Jelajahi</a></li>
+        <li><a href="#experiments" class="mobile-nav-link">Jelajahi</a></li>
         <li><a href="#about" class="mobile-nav-link">Tentang</a></li>
         <li><a href="#connect" class="mobile-nav-link">Tetap Terhubung</a></li>
       </ul>
@@ -218,35 +215,249 @@
   </section>
 
   <!-- ═══════════════════════════════════════════
+       EXPERIMENTS (Filterable Product Grid)
+  ═══════════════════════════════════════════ -->
+  <section class="labs-experiments" id="experiments" aria-labelledby="exp-title">
+    <div class="labs-experiments-blobs">
+      <div class="labs-blob labs-blob-exp-1" aria-hidden="true">
+        <svg viewBox="-100 -100 200 200" preserveAspectRatio="xMidYMid meet">
+          <path fill="#5b95f4" d="M45.3,-14C54.7,14.2,55.5,45.9,38.9,59.3C22.3,72.8,-11.8,68,-36.5,50C-61.2,32.1,-76.5,1.2,-68.9,-24.6C-61.2,-50.4,-30.6,-70.9,-6.3,-68.9C17.9,-66.8,35.9,-42.2,45.3,-14Z"/>
+        </svg>
+      </div>
+      <div class="labs-blob labs-blob-exp-2" aria-hidden="true">
+        <svg viewBox="-100 -100 200 200" preserveAspectRatio="xMidYMid meet">
+          <path fill="#f6a5ef" d="M58,-18C65,5,58,30,42,48C26,66,0,75,-22,65C-44,55,-58,32,-60,8C-62,-16,-48,-38,-28,-48C-8,-58,18,-54,38,-42C58,-30,51,-41,58,-18Z"/>
+        </svg>
+      </div>
+    </div>
+    <div class="section-container">
+      <div class="labs-header">
+        <h2 id="exp-title" class="labs-headline reveal-up">
+          Jadilah yang <span class="gradient-text">Pertama</span>
+        </h2>
+        <p class="labs-subheadline reveal-up" style="--delay: 0.1s">
+          Temukan eksperimen terbaru dari Zamify. Akses awal, beri masukan, dan bantu kami membentuk masa depan teknologi.
+        </p>
+      </div>
+      <div class="exp-filter-bar reveal-up" style="--delay: 0.15s" role="tablist" aria-label="Filter produk">
+        <button class="exp-filter-btn active" data-filter="all" role="tab" aria-selected="true">Semua</button>
+        <button class="exp-filter-btn" data-filter="ecommerce" role="tab" aria-selected="false">E-commerce</button>
+        <button class="exp-filter-btn" data-filter="produktivitas" role="tab" aria-selected="false">Produktivitas</button>
+        <button class="exp-filter-btn" data-filter="kreatif" role="tab" aria-selected="false">Kreatif</button>
+      </div>
+    </div>
+    <div class="exp-carousel">
+      <div class="exp-carousel-content">
+        <button class="exp-arrow exp-prev" type="button" aria-label="Sebelumnya">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+        </button>
+        <div class="exp-track-wrap">
+          <div class="exp-track">
+            <!-- Sellory -->
+            <article class="exp-card" data-category="ecommerce" style="--accent: #6366f1; --accent-dark: #4f46e5;">
+              <div class="exp-card-preview" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">
+                <div class="exp-preview-blob" style="background: rgba(255,255,255,0.06); top: -30%; right: -20%; width: 70%; height: 70%;"></div>
+                <div class="exp-preview-blob" style="background: rgba(255,255,255,0.04); bottom: -20%; left: -15%; width: 50%; height: 50%;"></div>
+                <div class="exp-mock">
+                  <div class="mock-browser">
+                    <div class="mock-browser-top"><span></span><span></span><span></span></div>
+                    <div class="mock-chart" style="background: rgba(255,255,255,0.2)"></div>
+                    <div class="mock-store-grid"><i style="background: rgba(255,255,255,0.15)"></i><i style="background: rgba(255,255,255,0.15)"></i><i style="background: rgba(255,255,255,0.15)"></i><i style="background: rgba(255,255,255,0.15)"></i></div>
+                  </div>
+                </div>
+                <div class="exp-card-logo" style="background: #6366f1;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                </div>
+              </div>
+              <div class="exp-card-body">
+                <span class="exp-card-tag" style="color: #6366f1; background: rgba(99,102,241,0.08);">E-commerce</span>
+                <h3 class="exp-card-title">Sellory</h3>
+                <p class="exp-card-desc">Platform e-commerce modern untuk bisnis yang berkembang.</p>
+                <a href="#" class="exp-card-link">Coba Sekarang →</a>
+              </div>
+            </article>
+            <!-- Ebsensy -->
+            <article class="exp-card" data-category="produktivitas" style="--accent: #8b5cf6; --accent-dark: #7c3aed;">
+              <div class="exp-card-preview" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">
+                <div class="exp-preview-blob" style="background: rgba(255,255,255,0.06); top: -25%; left: -15%; width: 60%; height: 60%;"></div>
+                <div class="exp-preview-blob" style="background: rgba(255,255,255,0.04); bottom: -10%; right: -10%; width: 40%; height: 40%;"></div>
+                <div class="exp-mock">
+                  <div class="mock-phone">
+                    <div class="mock-phone-pill"></div>
+                    <div class="mock-attendance-card" style="background: rgba(255,255,255,0.15)"></div>
+                    <div class="mock-attendance-list"><i style="background: rgba(255,255,255,0.1)"></i><i style="background: rgba(255,255,255,0.1)"></i><i style="background: rgba(255,255,255,0.1)"></i></div>
+                  </div>
+                </div>
+                <div class="exp-card-logo" style="background: #8b5cf6;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 012 2v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                </div>
+              </div>
+              <div class="exp-card-body">
+                <span class="exp-card-tag" style="color: #8b5cf6; background: rgba(139,92,246,0.08);">Produktivitas</span>
+                <h3 class="exp-card-title">Ebsensy</h3>
+                <p class="exp-card-desc">Manajemen kehadiran dan tenaga kerja cerdas.</p>
+                <a href="#" class="exp-card-link">Coba Sekarang →</a>
+              </div>
+            </article>
+            <!-- Creatory -->
+            <article class="exp-card" data-category="kreatif" style="--accent: #d946ef; --accent-dark: #c026d3;">
+              <div class="exp-card-preview" style="background: linear-gradient(135deg, #d946ef, #c026d3);">
+                <div class="exp-preview-blob" style="background: rgba(255,255,255,0.06); top: -10%; right: -10%; width: 50%; height: 50%;"></div>
+                <div class="exp-preview-blob" style="background: rgba(255,255,255,0.04); bottom: -30%; left: -20%; width: 65%; height: 65%;"></div>
+                <div class="exp-mock">
+                  <div class="mock-canvas">
+                    <div class="mock-canvas-shape shape-a" style="background: rgba(255,255,255,0.2)"></div>
+                    <div class="mock-canvas-shape shape-b" style="background: rgba(255,255,255,0.15)"></div>
+                    <div class="mock-canvas-tools"><i style="background: rgba(255,255,255,0.2)"></i><i style="background: rgba(255,255,255,0.15)"></i><i style="background: rgba(255,255,255,0.1)"></i></div>
+                  </div>
+                </div>
+                <div class="exp-card-logo" style="background: #d946ef;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.37 2.63L14 7l-1.59-1.59a2 2 0 00-2.82 0L8 7l9 9 1.59-1.59a2 2 0 000-2.82L17 10l4.37-4.37a2 2 0 000-2.82 2 2 0 00-3 0z"/><path d="M9 8c-4 4-6 12-6 12s8-2 12-6"/></svg>
+                </div>
+              </div>
+              <div class="exp-card-body">
+                <span class="exp-card-tag" style="color: #d946ef; background: rgba(217,70,239,0.08);">Kreatif</span>
+                <h3 class="exp-card-title">Creatory</h3>
+                <p class="exp-card-desc">Studio kreatif berbasis AI untuk desain dan edit.</p>
+                <a href="#" class="exp-card-link">Coba Sekarang →</a>
+              </div>
+            </article>
+            <!-- Analytix -->
+            <article class="exp-card" data-category="produktivitas" style="--accent: #0ea5e9; --accent-dark: #0284c7;">
+              <div class="exp-card-preview" style="background: linear-gradient(135deg, #0ea5e9, #0284c7);">
+                <div class="exp-preview-blob" style="background: rgba(255,255,255,0.06); top: -20%; right: -20%; width: 55%; height: 55%;"></div>
+                <div class="exp-preview-blob" style="background: rgba(255,255,255,0.04); bottom: -15%; left: -10%; width: 45%; height: 45%;"></div>
+                <div class="exp-mock">
+                  <div class="mock-analytics">
+                    <div class="mock-analytics-bar" style="height: 60%; background: rgba(255,255,255,0.2);"></div>
+                    <div class="mock-analytics-bar" style="height: 85%; background: rgba(255,255,255,0.25);"></div>
+                    <div class="mock-analytics-bar" style="height: 45%; background: rgba(255,255,255,0.2);"></div>
+                    <div class="mock-analytics-bar" style="height: 70%; background: rgba(255,255,255,0.25);"></div>
+                    <div class="mock-analytics-bar" style="height: 55%; background: rgba(255,255,255,0.2);"></div>
+                  </div>
+                </div>
+                <div class="exp-card-logo" style="background: #0ea5e9;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                </div>
+              </div>
+              <div class="exp-card-body">
+                <span class="exp-card-tag" style="color: #0ea5e9; background: rgba(14,165,233,0.08);">Produktivitas</span>
+                <h3 class="exp-card-title">Analytix</h3>
+                <p class="exp-card-desc">Wawasan bisnis berbasis AI dan visualisasi data.</p>
+                <a href="#" class="exp-card-link">Coba Sekarang →</a>
+              </div>
+            </article>
+            <!-- Formiy -->
+            <article class="exp-card" data-category="produktivitas" style="--accent: #14b8a6; --accent-dark: #0d9488;">
+              <div class="exp-card-preview" style="background: linear-gradient(135deg, #14b8a6, #0d9488);">
+                <div class="exp-preview-blob" style="background: rgba(255,255,255,0.06); top: -15%; left: -10%; width: 50%; height: 50%;"></div>
+                <div class="exp-preview-blob" style="background: rgba(255,255,255,0.04); bottom: -25%; right: -15%; width: 60%; height: 60%;"></div>
+                <div class="exp-mock">
+                  <div class="mock-form">
+                    <div class="mock-form-field" style="background: rgba(255,255,255,0.12);"></div>
+                    <div class="mock-form-field" style="background: rgba(255,255,255,0.12); width: 75%;"></div>
+                    <div class="mock-form-field" style="background: rgba(255,255,255,0.18); width: 45%;"></div>
+                    <div class="mock-form-field" style="background: rgba(255,255,255,0.12);"></div>
+                  </div>
+                </div>
+                <div class="exp-card-logo" style="background: #14b8a6;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="16" y2="17"/></svg>
+                </div>
+              </div>
+              <div class="exp-card-body">
+                <span class="exp-card-tag" style="color: #14b8a6; background: rgba(20,184,166,0.08);">Produktivitas</span>
+                <h3 class="exp-card-title">Formiy</h3>
+                <p class="exp-card-desc">Pembangun formulir dan survei cerdas.</p>
+                <a href="#" class="exp-card-link">Coba Sekarang →</a>
+              </div>
+            </article>
+            <!-- Pixily -->
+            <article class="exp-card" data-category="kreatif" style="--accent: #f59e0b; --accent-dark: #d97706;">
+              <div class="exp-card-preview" style="background: linear-gradient(135deg, #f59e0b, #d97706);">
+                <div class="exp-preview-blob" style="background: rgba(255,255,255,0.06); top: -10%; right: -5%; width: 40%; height: 40%;"></div>
+                <div class="exp-preview-blob" style="background: rgba(255,255,255,0.04); bottom: -20%; left: -20%; width: 55%; height: 55%;"></div>
+                <div class="exp-mock">
+                  <div class="mock-gallery">
+                    <div class="mock-gallery-item" style="background: rgba(255,255,255,0.15);"></div>
+                    <div class="mock-gallery-item" style="background: rgba(255,255,255,0.12);"></div>
+                    <div class="mock-gallery-item" style="background: rgba(255,255,255,0.15);"></div>
+                    <div class="mock-gallery-item" style="background: rgba(255,255,255,0.12);"></div>
+                  </div>
+                </div>
+                <div class="exp-card-logo" style="background: #f59e0b;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                </div>
+              </div>
+              <div class="exp-card-body">
+                <span class="exp-card-tag" style="color: #f59e0b; background: rgba(245,158,11,0.08);">Kreatif</span>
+                <h3 class="exp-card-title">Pixily</h3>
+                <p class="exp-card-desc">Generator gambar AI dengan teks sederhana.</p>
+                <a href="#" class="exp-card-link">Coba Sekarang →</a>
+              </div>
+            </article>
+            <!-- Socialzy -->
+            <article class="exp-card" data-category="ecommerce" style="--accent: #f97316; --accent-dark: #ea580c;">
+              <div class="exp-card-preview" style="background: linear-gradient(135deg, #f97316, #ea580c);">
+                <div class="exp-preview-blob" style="background: rgba(255,255,255,0.06); top: -20%; left: -15%; width: 55%; height: 55%;"></div>
+                <div class="exp-preview-blob" style="background: rgba(255,255,255,0.04); bottom: -10%; right: -10%; width: 40%; height: 40%;"></div>
+                <div class="exp-mock">
+                  <div class="mock-feed">
+                    <div class="mock-feed-post" style="background: rgba(255,255,255,0.12);"></div>
+                    <div class="mock-feed-post" style="background: rgba(255,255,255,0.08);"></div>
+                    <div class="mock-feed-post" style="background: rgba(255,255,255,0.12); width: 65%;"></div>
+                  </div>
+                </div>
+                <div class="exp-card-logo" style="background: #f97316;">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                </div>
+              </div>
+              <div class="exp-card-body">
+                <span class="exp-card-tag" style="color: #f97316; background: rgba(249,115,22,0.08);">E-commerce</span>
+                <h3 class="exp-card-title">Socialzy</h3>
+                <p class="exp-card-desc">Manajemen media sosial berbasis AI.</p>
+                <a href="#" class="exp-card-link">Coba Sekarang →</a>
+              </div>
+            </article>
+          </div>
+        </div>
+        <button class="exp-arrow exp-next" type="button" aria-label="Selanjutnya">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════
        LABS EXPLORE (Products & Ecosystem)
   ═══════════════════════════════════════════ -->
-  <section id="explore" class="labs-explore" aria-labelledby="explore-title">
-    <!-- Big playful blobs -->
-    <div class="labs-blob labs-blob-yellow" aria-hidden="true">
+  <!-- ═══════════════════════════════════════════
+       GRADUATION (Life beyond the Lab)
+  ═══════════════════════════════════════════ -->
+  <section class="labs-graduation" id="graduation" aria-labelledby="grad-title">
+    <div class="labs-blob labs-blob-grad-1" aria-hidden="true">
       <svg viewBox="-100 -100 200 200" preserveAspectRatio="xMidYMid meet">
-        <path fill="#ffcc34" d="M58,-18C65,5,58,30,42,48C26,66,0,75,-22,65C-44,55,-58,32,-60,8C-62,-16,-48,-38,-28,-48C-8,-58,18,-54,38,-42C58,-30,51,-41,58,-18Z"/>
+        <path fill="#f6a5ef" d="M40,-35C58,-30,75,-10,72,12C69,34,50,55,28,62C6,69,-22,65,-42,50C-62,35,-72,10,-65,-15C-58,-40,-38,-55,-15,-58C8,-61,22,-40,40,-35Z"/>
       </svg>
     </div>
-    <div class="labs-blob labs-blob-blue" aria-hidden="true">
+    <div class="labs-blob labs-blob-grad-2" aria-hidden="true">
       <svg viewBox="-100 -100 200 200" preserveAspectRatio="xMidYMid meet">
-        <path fill="#5b95f4" d="M45.3,-14C54.7,14.2,55.5,45.9,38.9,59.3C22.3,72.8,-11.8,68,-36.5,50C-61.2,32.1,-76.5,1.2,-68.9,-24.6C-61.2,-50.4,-30.6,-70.9,-6.3,-68.9C17.9,-66.8,35.9,-42.2,45.3,-14Z"/>
+        <path fill="#43e47f" d="M50,-28C65,-15,72,8,65,30C58,52,35,65,10,67C-15,69,-42,58,-58,38C-74,18,-76,-10,-62,-30C-48,-50,-24,-60,2,-60C28,-60,35,-41,50,-28Z"/>
       </svg>
     </div>
     <div class="section-container">
       <div class="labs-header">
-          <h2 id="explore-title" class="labs-headline reveal-up">
-            Mulai Langkah Baru  <span class="gradient-text">Bersama Kami</span>
-          </h2>
-          <p class="labs-subheadline reveal-up" style="--delay: 0.1s">
-            zamify hadir dengan tiga produk hebat dalam satu tempat. Semua kebutuhan Anda, kini terhubung dengan mulus.
-          </p>
+        <h2 id="grad-title" class="labs-headline reveal-up">
+          Mulai Langkah Baru  <span class="gradient-text">Bersama Kami</span>
+        </h2>
+        <p class="labs-subheadline reveal-up" style="--delay: 0.1s">
+          zamify hadir dengan tiga produk hebat dalam satu tempat. Semua kebutuhan Anda, kini terhubung dengan mulus.
+        </p>
       </div>
-
-      <div class="labs-cards-grid">
+      <div class="grad-cards-grid">
         <!-- Sellory -->
-        <article class="labs-card reveal-up" style="--delay: 0.2s; --accent: #6366f1; --accent-secondary: #4f46e5;">
-          <div class="labs-card-visual">
-            <div class="labs-card-art sellory-art">
+        <article class="grad-card reveal-up" style="--delay: 0.2s; --accent: #6366f1; --accent-secondary: #4f46e5;">
+          <div class="grad-card-bg">
+            <div class="grad-card-art sellory-art">
               <div class="mock-browser">
                 <div class="mock-browser-top"><span></span><span></span><span></span></div>
                 <div class="mock-chart" style="background: #6366f1"></div>
@@ -254,20 +465,20 @@
               </div>
             </div>
           </div>
-          <div class="labs-card-content">
-            <span class="labs-card-tag" style="color: #818cf8; background: rgba(129,140,248,0.12);">Commerce</span>
-            <h3 class="labs-card-title">Sellory</h3>
-            <div class="labs-card-desc-wrap">
-              <p class="labs-card-desc">Platform e-commerce modern untuk bisnis yang berkembang. Luncurkan, kelola, dan tingkatkan toko online Anda dengan mudah.</p>
+          <div class="grad-card-overlay"></div>
+          <div class="grad-card-content">
+            <span class="grad-card-tag" style="color: #818cf8;">Commerce</span>
+            <h3 class="grad-card-title">Sellory</h3>
+            <div class="grad-card-desc-wrap">
+              <p class="grad-card-desc">Platform e-commerce modern untuk bisnis yang berkembang. Luncurkan, kelola, dan tingkatkan toko online Anda dengan mudah.</p>
             </div>
-            <a href="#" class="labs-card-link">Pelajari Lebih Lanjut &rarr;</a>
+            <a href="#" class="grad-card-link">Pelajari Lebih Lanjut &rarr;</a>
           </div>
         </article>
-
         <!-- Ebsensy -->
-        <article class="labs-card reveal-up" style="--delay: 0.3s; --accent: #8b5cf6; --accent-secondary: #7c3aed;">
-          <div class="labs-card-visual">
-            <div class="labs-card-art ebsensy-art">
+        <article class="grad-card reveal-up" style="--delay: 0.3s; --accent: #8b5cf6; --accent-secondary: #7c3aed;">
+          <div class="grad-card-bg">
+            <div class="grad-card-art ebsensy-art">
               <div class="mock-phone">
                 <div class="mock-phone-pill"></div>
                 <div class="mock-attendance-card" style="background: #8b5cf6"></div>
@@ -275,20 +486,20 @@
               </div>
             </div>
           </div>
-          <div class="labs-card-content">
-            <span class="labs-card-tag" style="color: #a78bfa; background: rgba(167,139,250,0.12);">Operasional</span>
-            <h3 class="labs-card-title">Ebsensy</h3>
-            <div class="labs-card-desc-wrap">
-              <p class="labs-card-desc">Manajemen kehadiran dan tenaga kerja cerdas. Lacak, analisis, dan optimalkan kehadiran tim Anda.</p>
+          <div class="grad-card-overlay"></div>
+          <div class="grad-card-content">
+            <span class="grad-card-tag" style="color: #a78bfa;">Operasional</span>
+            <h3 class="grad-card-title">Ebsensy</h3>
+            <div class="grad-card-desc-wrap">
+              <p class="grad-card-desc">Manajemen kehadiran dan tenaga kerja cerdas. Lacak, analisis, dan optimalkan kehadiran tim Anda.</p>
             </div>
-            <a href="#" class="labs-card-link">Pelajari Lebih Lanjut &rarr;</a>
+            <a href="#" class="grad-card-link">Pelajari Lebih Lanjut &rarr;</a>
           </div>
         </article>
-
         <!-- Creatory -->
-        <article class="labs-card reveal-up" style="--delay: 0.4s; --accent: #d946ef; --accent-secondary: #c026d3;">
-          <div class="labs-card-visual">
-            <div class="labs-card-art creatory-art">
+        <article class="grad-card reveal-up" style="--delay: 0.4s; --accent: #d946ef; --accent-secondary: #c026d3;">
+          <div class="grad-card-bg">
+            <div class="grad-card-art creatory-art">
               <div class="mock-canvas">
                 <div class="mock-canvas-shape shape-a" style="background: #d946ef"></div>
                 <div class="mock-canvas-shape shape-b" style="background: #a855f7"></div>
@@ -296,13 +507,14 @@
               </div>
             </div>
           </div>
-          <div class="labs-card-content">
-            <span class="labs-card-tag" style="color: #e879f9; background: rgba(232,121,249,0.12);">Kreatif</span>
-            <h3 class="labs-card-title">Creatory</h3>
-            <div class="labs-card-desc-wrap">
-              <p class="labs-card-desc">Desain, edit, dan buat dengan mudah. Studio kreatif hebat yang dilengkapi alat berbasis AI.</p>
+          <div class="grad-card-overlay"></div>
+          <div class="grad-card-content">
+            <span class="grad-card-tag" style="color: #e879f9;">Kreatif</span>
+            <h3 class="grad-card-title">Creatory</h3>
+            <div class="grad-card-desc-wrap">
+              <p class="grad-card-desc">Desain, edit, dan buat dengan mudah. Studio kreatif hebat yang dilengkapi alat berbasis AI.</p>
             </div>
-            <a href="#" class="labs-card-link">Pelajari Lebih Lanjut &rarr;</a>
+            <a href="#" class="grad-card-link">Pelajari Lebih Lanjut &rarr;</a>
           </div>
         </article>
       </div>

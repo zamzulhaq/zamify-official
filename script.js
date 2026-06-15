@@ -28,7 +28,7 @@ function lerp(start, end, factor) {
   document.body.style.overflow = 'hidden';
 
   // Hide intro after animation completes
-  const TOTAL_DURATION = 1900; // ms
+  const TOTAL_DURATION = 3000; // ms
 
   setTimeout(() => {
     introScreen.classList.add('intro-hidden');
@@ -739,6 +739,177 @@ document.addEventListener('visibilitychange', () => {
       }
     }
   });
+})();
+
+/* ─── EXPERIMENTS CAROUSEL & FILTER ───────────────────────────────── */
+(function initExpCarousel() {
+  const track = document.querySelector('.exp-track');
+  const wrap = document.querySelector('.exp-track-wrap');
+  const prevBtn = document.querySelector('.exp-prev');
+  const nextBtn = document.querySelector('.exp-next');
+  const filterBar = document.querySelector('.exp-filter-bar');
+  if (!track || !wrap) return;
+
+  let scrollPos = 0;
+  let isDragging = false;
+  let dragStartX = 0;
+  let dragStartScroll = 0;
+
+  function getCardWidth() {
+    const first = track.querySelector('.exp-card:not(.hidden)');
+    if (!first) return 320;
+    const style = getComputedStyle(track);
+    const gapVal = parseFloat(style.gap) || 20;
+    return first.offsetWidth + gapVal;
+  }
+
+  function getMaxScroll() {
+    const visible = [...track.querySelectorAll('.exp-card:not(.hidden)')];
+    const style = getComputedStyle(track);
+    const gapVal = parseFloat(style.gap) || 20;
+    const total = visible.reduce((s, c) => s + c.offsetWidth + gapVal, 0) - gapVal;
+    const containerW = wrap.offsetWidth;
+    return Math.max(0, total - containerW);
+  }
+
+  function animateTo(target) {
+    const start = scrollPos;
+    const startTime = performance.now();
+    const duration = 400;
+
+    function tick(now) {
+      const elapsed = now - startTime;
+      const t = Math.min(elapsed / duration, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      scrollPos = start + (target - start) * ease;
+      track.style.transform = `translateX(-${scrollPos}px)`;
+      updateCurve();
+      if (t < 1) requestAnimationFrame(tick);
+    }
+
+    requestAnimationFrame(tick);
+  }
+
+  function moveCarousel(dir) {
+    const step = getCardWidth();
+    const target = scrollPos + dir * step;
+    const clamped = Math.max(0, Math.min(target, getMaxScroll()));
+    if (clamped !== scrollPos) animateTo(clamped);
+  }
+
+  function resetCarousel() {
+    if (scrollPos !== 0) animateTo(0);
+  }
+
+  function updateCurve() {
+    const cards = [...track.querySelectorAll('.exp-card:not(.hidden)')];
+    if (!cards.length) return;
+    const wrapRect = wrap.getBoundingClientRect();
+    const centerX = wrapRect.left + wrapRect.width / 2;
+
+    let closestIdx = 0;
+    let minDist = Infinity;
+    cards.forEach((card, i) => {
+      const rect = card.getBoundingClientRect();
+      const cardCenter = rect.left + rect.width / 2;
+      const d = Math.abs(cardCenter - centerX);
+      if (d < minDist) { minDist = d; closestIdx = i; }
+    });
+
+    const halfSpan = Math.max(closestIdx, cards.length - 1 - closestIdx) || 1;
+
+    cards.forEach((card, i) => {
+      const idxDist = (i - closestIdx) / halfSpan;
+      const absDist = Math.min(1, Math.abs(idxDist));
+      const translateYAmt = -absDist * 100;
+      const scaleAmt = 1 - absDist * 0.08;
+      card.style.transform = `translateY(${translateYAmt}px) scale(${scaleAmt})`;
+      card.style.zIndex = Math.round((1 - absDist) * 10);
+    });
+  }
+
+  // ── Drag ──
+  function onDragStart(e) {
+    if (e.target.closest('.exp-card-link, .exp-arrow')) return;
+    isDragging = true;
+    dragStartX = e.clientX || e.touches[0].clientX;
+    dragStartScroll = scrollPos;
+    wrap.classList.add('dragging');
+    track.style.transition = 'none';
+  }
+
+  function onDragMove(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.clientX || e.touches[0].clientX;
+    const delta = (dragStartX - x) * 1.2;
+    scrollPos = Math.max(0, Math.min(dragStartScroll + delta, getMaxScroll()));
+    track.style.transform = `translateX(-${scrollPos}px)`;
+    updateCurve();
+  }
+
+  function onDragEnd() {
+    if (!isDragging) return;
+    isDragging = false;
+    wrap.classList.remove('dragging');
+    track.style.transform = `translateX(-${scrollPos}px)`;
+    updateCurve();
+  }
+
+  // Mouse
+  wrap.addEventListener('mousedown', onDragStart);
+  document.addEventListener('mousemove', onDragMove);
+  document.addEventListener('mouseup', onDragEnd);
+  // Touch
+  wrap.addEventListener('touchstart', onDragStart, { passive: true });
+  document.addEventListener('touchmove', onDragMove, { passive: false });
+  document.addEventListener('touchend', onDragEnd);
+
+  // Arrow clicks
+  if (prevBtn) prevBtn.addEventListener('click', () => moveCarousel(-1));
+  if (nextBtn) nextBtn.addEventListener('click', () => moveCarousel(1));
+
+  // Filter
+  if (filterBar) {
+    filterBar.addEventListener('click', (e) => {
+      const btn = e.target.closest('.exp-filter-btn');
+      if (!btn) return;
+
+      const filter = btn.dataset.filter;
+
+      filterBar.querySelectorAll('.exp-filter-btn').forEach(b => {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-selected', 'true');
+
+      const cards = track.querySelectorAll('.exp-card');
+      cards.forEach(card => {
+        if (filter === 'all' || card.dataset.category === filter) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+
+      resetCarousel();
+    });
+  }
+
+  // Recalc on resize
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      scrollPos = Math.min(scrollPos, getMaxScroll());
+      track.style.transform = `translateX(-${scrollPos}px)`;
+      updateCurve();
+    }, 150);
+  });
+
+  // Initial curve
+  requestAnimationFrame(updateCurve);
 })();
 
 /* ─── INITIALIZATION COMPLETE ────────────────────────────────────── */

@@ -141,7 +141,6 @@ svg { display: block; max-width: 100%; }
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  animation: introReveal 0.6s var(--ease) 0.12s both;
 }
 
 .intro-logo {
@@ -185,6 +184,7 @@ svg { display: block; max-width: 100%; }
   color: var(--ink);
   background: none;
   -webkit-text-fill-color: currentColor;
+  animation: introReveal 0.6s var(--ease) 0.12s both;
 }
 
 .intro-tagline {
@@ -192,6 +192,7 @@ svg { display: block; max-width: 100%; }
   font-size: clamp(1.2rem, 2.8vw, 2.15rem);
   font-weight: 650;
   letter-spacing: -0.045em;
+  animation: introReveal 0.6s var(--ease) 0.4s both;
 }
 
 .intro-progress {
@@ -208,15 +209,20 @@ svg { display: block; max-width: 100%; }
   width: 0;
   border-radius: inherit;
   background: var(--ink);
-  animation: introProgress 1.15s var(--ease) 0.35s forwards;
+  animation: introProgress 2.5s var(--ease) 0.4s forwards;
 }
 
 .intro-bg-blob {
   position: absolute;
   z-index: 1;
-  opacity: 1;
-  animation: blobFloat 8s ease-in-out infinite alternate;
+  opacity: 0;
+  animation: blobAppear 0.8s var(--ease) forwards, blobFloat 8s ease-in-out infinite alternate;
 }
+.intro-blob-top-left { animation-delay: 0s, 0.8s; }
+.intro-blob-top-right { animation-delay: 0.15s, 0.95s; }
+.intro-blob-1 { animation-delay: 0.3s, 1.1s; }
+.intro-blob-2 { animation-delay: 0.45s, 1.25s; }
+.intro-blob-3 { animation-delay: 0.6s, 1.4s; }
 
 .intro-blob-1 {
   width: 34vw;
@@ -251,6 +257,11 @@ svg { display: block; max-width: 100%; }
 
 @keyframes introProgress {
   to { width: 100%; }
+}
+
+@keyframes blobAppear {
+  from { opacity: 0; transform: scale(0.6); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
 @keyframes blobFloat {
@@ -1101,7 +1112,7 @@ svg { display: block; max-width: 100%; }
   position: relative;
   z-index: 1;
   max-width: 640px;
-  margin: 0 auto 48px;
+  margin: 0 auto 56px;
   text-align: center;
 }
 
@@ -1111,7 +1122,7 @@ svg { display: block; max-width: 100%; }
   font-weight: 800;
   letter-spacing: -0.05em;
   line-height: 1.08;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
 }
 
 .labs-subheadline {
@@ -1119,7 +1130,7 @@ svg { display: block; max-width: 100%; }
   margin: 0 auto;
   color: var(--muted);
   font-size: clamp(1.05rem, 1.8vw, 1.35rem);
-  line-height: 1.5;
+  line-height: 1.65;
 }
 
 .labs-cards-grid {
@@ -1434,8 +1445,8 @@ svg { display: block; max-width: 100%; }
 .labs-about-blob-3 {
   width: min(18vw, 220px);
   aspect-ratio: 1;
-  top: 40%;
-  left: 40%;
+  bottom: -12%;
+  right: 30%;
   animation-delay: -7s;
 }
 .labs-about-container {
@@ -1456,6 +1467,520 @@ svg { display: block; max-width: 100%; }
   line-height: 1.3;
   color: var(--ink);
   font-weight: 500;
+}
+
+/* ── Experiments (Filterable Product Grid) ── */
+.labs-experiments {
+  position: relative;
+  background: var(--paper);
+  padding: 100px 24px 120px;
+  border-top: 1px solid var(--line);
+}
+
+.labs-experiments-blobs {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.labs-experiments .section-container {
+  padding-bottom: 48px;
+}
+
+.labs-blob-exp-1 {
+  width: min(32vw, 380px);
+  height: min(32vw, 380px);
+  top: -5%;
+  left: -10%;
+}
+.labs-blob-exp-2 {
+  width: min(28vw, 340px);
+  height: min(28vw, 340px);
+  bottom: -5%;
+  right: -8%;
+  animation-delay: -5s;
+}
+
+.exp-filter-bar {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: -12px;
+  margin-bottom: 56px;
+}
+
+.exp-filter-btn {
+  padding: 9px 24px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--muted);
+  background: transparent;
+  border: 1px solid rgba(32,33,36,0.1);
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  font-family: inherit;
+}
+
+.exp-filter-btn:hover {
+  color: var(--ink);
+  border-color: rgba(32,33,36,0.2);
+  background: rgba(32,33,36,0.03);
+}
+
+.exp-filter-btn.active {
+  color: #fff;
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.exp-carousel {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 48px 0 80px;
+  margin-top: 48px;
+}
+
+.exp-carousel-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.exp-arrow {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+}
+
+.exp-arrow:hover {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+.exp-track-wrap {
+  flex: 1;
+  overflow: visible;
+  cursor: grab;
+  user-select: none;
+}
+
+.exp-track-wrap.dragging {
+  cursor: grabbing;
+}
+
+.exp-track {
+  display: flex;
+  gap: 24px;
+  transition: transform 0.1s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+  align-items: stretch;
+}
+
+.exp-track.no-transition {
+  transition: none;
+}
+
+.exp-card {
+  flex-shrink: 0;
+  width: min(400px, calc((100% - 48px) / 3));
+  position: relative;
+  border-radius: 28px;
+  background: #fff;
+  color: var(--ink);
+  border: 1px solid rgba(16,16,20,0.04);
+  box-shadow: 0 4px 16px rgba(16,16,20,0.03), 0 1px 4px rgba(16,16,20,0.02);
+  transition: box-shadow 0.35s var(--ease);
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+}
+
+.exp-card.hidden { display: none; }
+
+.exp-card:hover {
+  box-shadow: 0 12px 40px rgba(16,16,20,0.05), 0 1px 4px rgba(16,16,20,0.02);
+}
+
+/* ── Card Preview Area (65% of card) ── */
+.exp-card-preview {
+  position: relative;
+  border-radius: 27px 27px 0 0;
+  overflow: hidden;
+  flex: 1 0 auto;
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.exp-card-logo {
+  position: absolute;
+  bottom: 14px;
+  left: 18px;
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.exp-card-logo svg {
+  width: 22px;
+  height: 22px;
+}
+
+.exp-preview-blob {
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+.exp-mock {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0 20px;
+}
+
+/* Make existing mockup elements work inside card preview */
+.exp-card-preview .mock-browser,
+.exp-card-preview .mock-phone,
+.exp-card-preview .mock-canvas {
+  --mock-bg: rgba(255,255,255,0.08);
+  --mock-border: rgba(255,255,255,0.15);
+  transform: scale(1.15);
+  transform-origin: center;
+}
+
+.exp-card-preview .mock-browser-top span,
+.exp-card-preview .mock-phone-pill {
+  background: rgba(255,255,255,0.2);
+}
+
+.exp-card-preview .mock-chart::after {
+  border-color: rgba(255,255,255,0.3);
+}
+
+.exp-card-preview .mock-store-grid i {
+  background: rgba(255,255,255,0.12);
+  border-radius: 4px;
+}
+
+.exp-card-preview .mock-attendance-list i {
+  background: rgba(255,255,255,0.08);
+}
+
+.exp-card-preview .mock-canvas-tools i {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.15);
+}
+
+/* ── New mockup styles for products without existing mocks ── */
+.exp-card-preview .mock-analytics,
+.exp-card-preview .mock-form,
+.exp-card-preview .mock-gallery,
+.exp-card-preview .mock-feed {
+  transform: scale(1.15);
+  transform-origin: center;
+}
+
+.mock-analytics {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  width: 100%;
+  max-width: 180px;
+  height: 100px;
+  padding: 8px 0;
+}
+
+.mock-analytics-bar {
+  flex: 1;
+  border-radius: 4px 4px 0 0;
+  min-height: 16px;
+}
+
+.mock-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 180px;
+}
+
+.mock-form-field {
+  height: 14px;
+  border-radius: 4px;
+}
+
+.mock-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  width: 100%;
+  max-width: 180px;
+}
+
+.mock-gallery-item {
+  aspect-ratio: 1;
+  border-radius: 8px;
+}
+
+.mock-gallery-item:first-child {
+  grid-column: 1 / -1;
+}
+
+.mock-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 180px;
+}
+
+.mock-feed-post {
+  height: 20px;
+  border-radius: 6px;
+}
+
+/* ── Card Body Area (35% of card) ── */
+.exp-card-body {
+  position: relative;
+  z-index: 1;
+  padding: 22px 24px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  background: #fff;
+  border-radius: 0 0 28px 28px;
+}
+
+.exp-card-tag {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.exp-card-title {
+  color: var(--ink);
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.exp-card-desc {
+  color: var(--muted);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.exp-card-link {
+  color: var(--accent, #5b95f4);
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: gap 0.18s var(--ease);
+  margin-top: 4px;
+}
+
+.exp-card-link:hover {
+  gap: 10px;
+}
+
+/* ── Graduation (Life beyond the Lab) ── */
+.labs-graduation {
+  position: relative;
+  overflow: hidden;
+  background: var(--paper);
+  padding: 80px 24px 120px;
+  border-top: 1px solid var(--line);
+}
+
+.labs-blob-grad-1 {
+  width: min(35vw, 420px);
+  height: min(35vw, 420px);
+  top: -8%;
+  right: -8%;
+}
+.labs-blob-grad-2 {
+  width: min(30vw, 360px);
+  height: min(30vw, 360px);
+  bottom: -10%;
+  left: -10%;
+  animation-delay: -4s;
+}
+
+.grad-cards-grid {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 64px;
+}
+
+.grad-card {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background: #1a1a1a;
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+
+.grad-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 20px 56px rgba(0,0,0,0.4);
+}
+
+.grad-card-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.grad-card-art {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  transform: scale(0.85);
+  transition: transform 0.5s var(--ease);
+}
+
+.grad-card:hover .grad-card-art {
+  transform: scale(0.9);
+}
+
+.grad-card-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(180deg, transparent 35%, rgba(0,0,0,0.85) 85%);
+}
+
+.grad-card-content {
+  position: relative;
+  z-index: 3;
+  padding: 28px 26px 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.grad-card-tag {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  height: 22px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 8px;
+}
+
+.grad-card-title {
+  color: #fff;
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.grad-card-desc-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.5s ease;
+}
+
+.grad-card:hover .grad-card-desc-wrap {
+  grid-template-rows: 1fr;
+}
+
+.grad-card-desc {
+  overflow: hidden;
+  min-height: 0;
+  color: rgba(255,255,255,0.6);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.grad-card-link {
+  color: var(--accent, #87a9ff);
+  font-weight: 500;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 0.2s var(--ease), gap 0.2s var(--ease);
+  margin-top: auto;
+}
+
+.grad-card-link:hover {
+  opacity: 0.8;
+  gap: 10px;
+}
+
+.grad-card .mock-browser,
+.grad-card .mock-phone,
+.grad-card .mock-canvas {
+  transform: scale(1.1);
+}
+
+.grad-card:hover .mock-browser,
+.grad-card:hover .mock-phone,
+.grad-card:hover .mock-canvas {
+  transform: scale(1.15);
 }
 
 /* Footer Base */
@@ -1609,6 +2134,15 @@ svg { display: block; max-width: 100%; }
     gap: 32px;
   }
 
+  .grad-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .exp-card {
+    width: min(400px, calc((100% - 24px) / 2));
+  }
+
   .footer-top {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1711,6 +2245,15 @@ svg { display: block; max-width: 100%; }
   .labs-cards-grid {
     grid-template-columns: 1fr;
     gap: 32px;
+  }
+
+  .grad-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .exp-card {
+    width: 100%;
   }
 
   .labs-connect-actions {
