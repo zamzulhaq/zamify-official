@@ -198,29 +198,24 @@ function lerp(start, end, factor) {
 
 
 
-/* ─── HERO PRODUCT CARDS — Staggered entrance ────────────────────── */
-(function initHeroCards() {
-  const heroCards = $$('.hero-mini-card');
-  if (!heroCards.length) return;
+/* ─── HERO ILLUSTRATION — Fade-in entrance ─────────────────── */
+(function initHeroIllustration() {
+  const img = $('.hero-illustration');
+  if (!img) return;
 
-  heroCards.forEach((card, index) => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(16px)';
-    card.style.transition = `opacity 0.5s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)`;
-    card.style.transitionDelay = `${0.8 + index * 0.12}s`;
+  img.style.opacity = '0';
+  img.style.transform = 'scale(0.95)';
+  img.style.transition = 'opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
 
-    // Trigger after slight delay
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        card.style.opacity = '1';
-        card.style.transform = 'translateY(0)';
-      }, 200);
-    });
+  requestAnimationFrame(() => {
+    setTimeout(() => {
+      img.style.opacity = '1';
+      img.style.transform = 'scale(1)';
+    }, 400);
   });
 })();
 
 /* ─── SMOOTH SCROLL ──────────────────────────────────────────────── */
-/* ─── HERO — Static (no carousel) ─────────────────────────── */
 
 (function initSmoothScroll() {
   $$('a[href^="#"]').forEach(anchor => {
@@ -245,49 +240,6 @@ function lerp(start, end, factor) {
 })();
 
 
-
-/* ─── PARALLAX HERO BLOBS ────────────────────────────────────────── */
-(function initParallaxBlobs() {
-  const blobs = $$('.blob');
-  if (!blobs.length) return;
-
-  // Only on desktop
-  if (window.matchMedia('(pointer: coarse)').matches) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  let rafId = null;
-  let targetX = 0;
-  let targetY = 0;
-  let curX = 0;
-  let curY = 0;
-
-  window.addEventListener('mousemove', (e) => {
-    // Normalize mouse position to -1 to 1
-    targetX = (e.clientX / window.innerWidth - 0.5) * 2;
-    targetY = (e.clientY / window.innerHeight - 0.5) * 2;
-  }, { passive: true });
-
-  function updateBlobs() {
-    curX = lerp(curX, targetX, 0.05);
-    curY = lerp(curY, targetY, 0.05);
-    const scrollY = window.scrollY;
-
-    blobs.forEach((blob, index) => {
-      // Different multiplier for each blob to create depth
-      const parallaxFactor = [40, -30, 25, -20][index] || 15;
-      const scrollSpeed = [0.15, -0.1, 0.12, -0.08][index] || 0.1;
-      
-      const x = curX * parallaxFactor;
-      const y = curY * parallaxFactor + (scrollY * scrollSpeed);
-      
-      blob.style.translate = `${x}px ${y}px`;
-    });
-
-    rafId = requestAnimationFrame(updateBlobs);
-  }
-
-  rafId = requestAnimationFrame(updateBlobs);
-})();
 
 /* ─── CTA BUTTON SPARKLE EFFECT ─────────────────────────────────── */
 (function initButtonSparkle() {
@@ -328,60 +280,6 @@ function lerp(start, end, factor) {
   `;
   document.head.appendChild(style);
 })();
-
-/* ─── DYNAMIC TYPING EFFECT for Hero Badge ──────────────────────── */
-(function initTypingEffect() {
-  const badge = $('.hero-badge');
-  if (!badge) return;
-
-  const phrases = [
-    'Powered by AI Intelligence',
-    'Built for Modern Business',
-    'Your Digital Ecosystem',
-    'Commerce · Productivity · Creativity',
-  ];
-
-  let phraseIndex = 0;
-  let charIndex = phrases[0].length;
-  let isDeleting = false;
-  let isPaused = false;
-
-  const textSpan = badge.childNodes[badge.childNodes.length - 1];
-  if (!textSpan || textSpan.nodeType !== 3) return;
-
-  function type() {
-    const current = phrases[phraseIndex];
-
-    if (!isDeleting) {
-      if (charIndex < current.length) {
-        textSpan.textContent = ' ' + current.slice(0, charIndex + 1);
-        charIndex++;
-        setTimeout(type, 60);
-      } else {
-        // Pause before deleting
-        setTimeout(() => {
-          isDeleting = true;
-          type();
-        }, 2500);
-      }
-    } else {
-      if (charIndex > 1) {
-        textSpan.textContent = ' ' + current.slice(0, charIndex - 1);
-        charIndex--;
-        setTimeout(type, 35);
-      } else {
-        isDeleting = false;
-        phraseIndex = (phraseIndex + 1) % phrases.length;
-        charIndex = 0;
-        setTimeout(type, 400);
-      }
-    }
-  }
-
-  // Start typing after page loads
-  setTimeout(type, 3500);
-})();
-
 
 
 /* ─── PARTICLE AMBIENT EFFECT ────────────────────────────────────── */
@@ -755,10 +653,10 @@ console.log(
   // All triggers that open the platform picker
   const modalTriggers = [
     ...$$('#nav-signin-btn'),
-    ...$$('.btn-ghost').filter(b => b.textContent.trim() === 'Masuk'),
+    ...$$('.btn-ghost').filter(b => b.textContent.trim() === 'Ikuti'),
     ...$$('#nav-getstarted-btn'),
     ...$$('.mobile-nav-actions .btn-primary'),
-    ...$$('.btn-pill-yellow').filter(b => b.textContent.trim() === 'Mulai Gratis'),
+    ...$$('.btn-pill-yellow').filter(b => b.textContent.trim() === 'Hubungi Kami'),
   ];
   modalTriggers.forEach(btn => btn.addEventListener('click', openModal));
 
@@ -799,8 +697,8 @@ function showToast(msg) {
     });
   });
 
-  // Ikuti Pembaruan (connect section)
-  $$('.btn-pill-yellow').filter(b => b.textContent.trim() === 'Ikuti Pembaruan').forEach(btn => {
+  // Ikuti Perjalanan Kami (connect section)
+  $$('.btn-pill-yellow').filter(b => b.textContent.trim() === 'Ikuti Perjalanan Kami').forEach(btn => {
     btn.addEventListener('click', e => {
       e.preventDefault();
       showToast(' Masih dalam masa pembangunan');
